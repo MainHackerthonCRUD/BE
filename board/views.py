@@ -13,7 +13,8 @@ from .permissions import IsOwnerOrReadOnly
 from .serializers import *
 import json
 
-file_path='C:/Users/user/Desktop/hackerthon05/hospital_list_withGU.json'
+#file_path='C:/Users/user/Desktop/hackerthon05/hospital_list_withGU.json'
+file_path = '"C:\Users\eunji\OneDrive\바탕 화면\hack\merged_df_UTF.json"'
 with open(file_path, 'r', encoding='utf-8') as file:
     datas = json.load(file)
 
