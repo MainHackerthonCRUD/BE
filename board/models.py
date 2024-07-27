@@ -15,29 +15,24 @@ from member.models import CustomUser
 '''
 
 class Board(models.Model):
-    # user = models.ForeignKey(CustomUser, null=True, on_delete=models.CASCADE)
     hospital_name = models.CharField(max_length=100)
     address = models.CharField(max_length=100,null=True)
-    gu=models.CharField(max_length=100,null=True)
+    #gu=models.CharField(max_length=100,null=True)
     reservation=models.CharField(max_length=100,null=True)
     visitcnt=models.IntegerField()
     blogcnt=models.IntegerField()
     maindoctorcnt=models.IntegerField()
-    
-    # ob = models.CharField(max_length=100) #산과여부
+
 
 
 class Comment(models.Model):
-    user=models.ForeignKey(CustomUser,null=True,on_delete=models.CASCADE,
-                           related_name='comments')
-    board=models.ForeignKey(Board, null=True,on_delete=models.CASCADE,
-                            related_name='comments')
-
+    user=models.ForeignKey(CustomUser,null=True,on_delete=models.CASCADE,related_name='comments')
+    board=models.ForeignKey(Board, null=True,on_delete=models.CASCADE,related_name='comments')
     title=models.CharField(max_length=100)
     body=models.TextField(max_length=1000)
     date = models.DateTimeField(auto_now_add=True)
-    # star=models.CharField(max_length=100)  # 나중에 다시 확인
-    star=models.IntegerField()
+    star=models.CharField(max_length=100) 
+
 
 
 
