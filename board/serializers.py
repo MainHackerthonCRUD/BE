@@ -13,10 +13,10 @@ class BoardDetailSerializer(serializers.ModelSerializer):
     # def get_user(self, obj):
     #     return obj.user.nickname
 '''
-class SaveHospitalToDBSerializer(serializers.ModelSerializer):
+class HospitalSerializer(serializers.ModelSerializer):
     class Meta:
         model = Board
-        fields=['id','hospital_name','address','reservation','visitcnt','blogcnt','maindoctorcnt']
+        fields = '__all__'
 # mypage
 
 class MypageCommentSerializer(serializers.ModelSerializer):
