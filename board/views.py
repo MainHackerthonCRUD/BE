@@ -9,73 +9,80 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from .permissions import IsOwnerOrReadOnly
-
+import requests
 from .serializers import *
 import json
-
-#file_path='C:/Users/user/Desktop/hackerthon05/hospital_list_withGU.json'
-file_path = '"C:\Users\eunji\OneDrive\바탕 화면\hack\merged_df_UTF.json"'
-with open(file_path, 'r', encoding='utf-8') as file:
-    datas = json.load(file)
-
-
-datasave=[]
-
-# board/post/
-@api_view(['POST'])
-def board_post(request):
-    if request.method=='POST':
-        for data in datas:
-            tempdata={}
-            for i in data:
-                if i=='병원명':
-                    tempdata['hospital_name']=data[i]
-                elif i=='주소':
-                    tempdata['address']=data[i]
-                elif i=='구':
-                    tempdata['gu']=data[i]
-                elif i=='예약가능여부':
-                    tempdata['reservation']=data[i]
-
-                elif i=='방문자리뷰':
-                    tempdata['visitcnt']=data[i].split()[2]
-                    if ',' in tempdata['visitcnt']:
-                        tempdata['visitcnt']=tempdata['visitcnt'].replace(',',"")
-
-                elif i=='블로그리뷰':
-                    try:
-                        tempdata['blogcnt']=data[i].split()[2]
-                        if ',' in tempdata['blogcnt']:
-                            tempdata['blogcnt']=tempdata['blogcnt'].replace(',',"")
-                            # 1000번대가 존재하는지 확인
-                    except:
-                        tempdata['blogcnt']=None
-
-
-                elif i=='산부인과전문의수':
-                    try:
-                        tempdata['maindoctorcnt']=data[i].split()[1].replace('명','')
-                    except:
-                        tempdata['maindoctorcnt']=None
-
-            serializer=BoardPostSerializer(data=tempdata)
-            if serializer.is_valid():
-                # post=serializer.save(user=request.user)
-                serializer.save(user=request.user)
-                
-            # datasave.append(tempdata)
-        return None
-# post=serializer.save(user=request.user)
+from .serializers import SaveHospitalToDBSerializer
+# 초반 api
+# #file_path='C:/Users/user/Desktop/hackerthon05/hospital_list_withGU.json'
+# file_path = "C:\Users\eunji\OneDrive\바탕 화면\hack\merged_df_UTF.json"
+# with open(file_path, 'r', encoding='utf-8') as file:
+#     datas = json.load(file)
+# datasave=[]
+# # board/post/
+# @api_view(['POST'])
+# def board_post(request):
+#     if request.method=='POST':
+#         for data in datas:
+#             tempdata={}
+#             for i in data:
+#                 if i=='병원명':
+#                     tempdata['hospital_name']=data[i]
+#                 elif i=='주소':
+#                     tempdata['address']=data[i]
+#                 elif i=='구':
+#                     tempdata['gu']=data[i]
+#                 elif i=='예약가능여부':
+#                     tempdata['reservation']=data[i]
+#                 elif i=='방문자리뷰':
+#                     tempdata['visitcnt']=data[i].split()[2]
+#                     if ',' in tempdata['visitcnt']:
+#                         tempdata['visitcnt']=tempdata['visitcnt'].replace(',',"")
+#                 elif i=='블로그리뷰':
+#                     try:
+#                         tempdata['blogcnt']=data[i].split()[2]
+#                         if ',' in tempdata['blogcnt']:
+#                             tempdata['blogcnt']=tempdata['blogcnt'].replace(',',"")
+#                             # 1000번대가 존재하는지 확인
+#                     except:
+#                         tempdata['blogcnt']=None
+#                 elif i=='산부인과전문의수':
+#                     try:
+#                         tempdata['maindoctorcnt']=data[i].split()[1].replace('명','')
+#                     except:
+#                         tempdata['maindoctorcnt']=None
+#             serializer=BoardPostSerializer(data=tempdata)
+#             if serializer.is_valid():
+#                 # post=serializer.save(user=request.user)
+#                 serializer.save(user=request.user)               
+#             # datasave.append(tempdata)
+#         return None
+# # post=serializer.save(user=request.user)
+#     for i in datasave:
+#         for j in i:
+#             if j=='hospital_name':
+#                 print(i[j])
+#         # serializer=BoardPostSerializer(data=request.data)
+#         # return data
 
 
 
-    for i in datasave:
-        for j in i:
-            if j=='hospital_name':
-                print(i[j])
+class SaveDBAPI(APIView):
+    def post(self, request):
+        file_path = 'C:\\Users\\eunji\\OneDrive\\바탕 화면\\hack\\merged_df_UTF.json'
 
-        # serializer=BoardPostSerializer(data=request.data)
-        # return data
+
+        with open(file_path, 'r') as file:
+            hospitals_data = []
+            for line in file:
+                hospital = json.loads(line.strip())
+                serializer = SaveHospitalToDBSerializer(data=hospital)
+                if serializer.is_valid():
+                    serializer.save()
+                    hospitals_data.append(serializer.data)
+                else:
+                    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(hospitals_data, status=status.HTTP_201_CREATED)
 
 '''
 {'병원명': '우아한여성의원', 
@@ -103,40 +110,19 @@ def board_post(request):
 '''
 
 
-
-
-
-
 # board/home/
 @api_view(['GET']) 
-# @authentication_classes([JWTAuthentication])
-# @permission_classes([IsAuthenticatedOrReadOnly])
 def board_list(request):
     if request.method =='GET':
         boards = Board.objects.all()
         serializer = BoardListSerializer(boards, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-
-    # elif request.method == 'POST':
-    #     serializer = BoardDetailSerializer(data=request.data)
-
-    #     if serializer.is_valid():
-    #         board = serializer.save(user = request.user)
-    #         result = BoardDetailSerializer(board)
-    #         return Response(result.data, status = status.HTTP_201_CREATED)
-    #     return Response(status=status.HTTP_400_BAD_REQUEST)   
-    
-
-
-
 '''
 한 블로그 조회
 '''
 # board/home/<int:pk>/
 @api_view(['GET','PUT','DELETE'])
-# @authentication_classes([JWTAuthentication])
-# @permission_classes([IsOwnerOrReadOnly])
 def board_detail(request, pk):
     try: 
         board = Board.objects.get(pk=pk)

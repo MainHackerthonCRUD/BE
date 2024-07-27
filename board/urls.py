@@ -9,7 +9,7 @@ urlpatterns = [
     path('home/', board_list),
 
     # 병원 데이터 저장 - 한번만 실행/접속
-    path('post/',board_post),
+    path('post/',SaveDBAPI.as_view()),
     
     # 병원 객체 조회
     path('home/<int:pk>/',board_detail),
