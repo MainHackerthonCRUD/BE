@@ -67,22 +67,22 @@ from .serializers import SaveHospitalToDBSerializer
 
 
 
-class SaveDBAPI(APIView):
-    def post(self, request):
-        file_path = 'C:\\Users\\eunji\\OneDrive\\바탕 화면\\hack\\merged_df_UTF.json'
+# class SaveDBAPI(APIView):
+#     def post(self, request):
+#         file_path = 'C:\\Users\\eunji\\OneDrive\\바탕 화면\\hack\\merged_df_UTF.json'
 
 
-        with open(file_path, 'r') as file:
-            hospitals_data = []
-            for line in file:
-                hospital = json.loads(line.strip())
-                serializer = SaveHospitalToDBSerializer(data=hospital)
-                if serializer.is_valid():
-                    serializer.save()
-                    hospitals_data.append(serializer.data)
-                else:
-                    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-            return Response(hospitals_data, status=status.HTTP_201_CREATED)
+#         with open(file_path, 'r') as file:
+#             hospitals_data = []
+#             for line in file:
+#                 hospital = json.loads(line.strip())
+#                 serializer = SaveHospitalToDBSerializer(data=hospital)
+#                 if serializer.is_valid():
+#                     serializer.save()
+#                     hospitals_data.append(serializer.data)
+#                 else:
+#                     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#             return Response(hospitals_data, status=status.HTTP_201_CREATED)
 
 '''
 {'병원명': '우아한여성의원', 
@@ -108,7 +108,13 @@ class SaveDBAPI(APIView):
 기타전문의여부
 
 '''
-
+class HospitalAPIView(APIView):
+    def post(self, request):
+        serializer = HospitalSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # board/home/
 @api_view(['GET']) 
@@ -207,13 +213,13 @@ def mypage(request,pk):
  
 
 
-# 구에 따라 분류
-@api_view(['GET'])
-def find_gu(request,gu):
-    if request.method=='GET':
-        locations=Board.objects.filter(gu=gu)
-        serializer=GuSerializer(locations,many=True)
-        return Response(serializer.data,status=status.HTTP_200_OK)
+# # 구에 따라 분류
+# @api_view(['GET'])
+# def find_gu(request,gu):
+#     if request.method=='GET':
+#         locations=Board.objects.filter(gu=gu)
+#         serializer=GuSerializer(locations,many=True)
+#         return Response(serializer.data,status=status.HTTP_200_OK)
 
 
 
