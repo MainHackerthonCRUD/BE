@@ -24,3 +24,41 @@ urlpatterns = [
     path('dj/registration/', include('dj_rest_auth.registration.urls')),
 
 ]
+'''
+{
+    "username":"honggyu",
+    "password1":"asdf1234qwer",
+    "password2":"asdf1234qwer",
+    "nickname":"hongddd"
+}
+
+{
+    "title":"hello2",
+    "body":"sdfs",
+    "star":3
+}
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIyMDExODMxLCJpYXQiOjE3MjIwMDgyMzEsImp0aSI6ImViMjcyYTA4NTI2MTQwNTQ5Mzc5NmU4OTQ0NDcwM2FjIiwidXNlcl9pZCI6Nn0.YO0kbfdLnTSimxlntvfLL_OpE43wr5CcxXtNnEYswog
+
+
+
+'''
+
+
+
+
+
+'''
+db에서 모델 객체 삭제하기
+$ python manage.py shell
+Python 3.12.2 (tags/v3.12.2:6abddd9, Feb  6 2024, 21:26:36) [MSC v.1937 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from member.models import CustomUser
+>>> CustomUser.objects.all().delete()
+'''
+
+'''
+view에서 nickname=honggyuddd 조건으로 mypage 반환하게 해놨음
+id 기준으로 할 지, 다른 조건으로 할 지 생각해봐야 함
+
+'''

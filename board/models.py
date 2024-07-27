@@ -1,46 +1,45 @@
 from django.db import models
 from member.models import CustomUser
 
-# Create your models here.
-class Board(models.Model):
-    # IS_OB_CHOICES = [
-    #     ("X", "X"),
-    #     ("O", "O"),
-    # ]
-    
-    # SEOUL_CHOICES = [
-    #     ('종로구', '종로구'), 
-    #     ('중구', '중구'), 
-    #     ('용산구', '용산구'), 
-    #     ('성동구', '성동구'), 
-    #     ('광진구', '광진구'), 
-    #     ('동대문구', '동대문구'), 
-    #     ('중랑구', '중랑구'),
-    #     ('성북구', '성북구'), 
-    #     ('강북구', '강북구'), 
-    #     ('도봉구', '도봉구'), 
-    #     ('노원구', '노원구'), 
-    #     ('은평구', '은평구'), 
-    #     ('서대문구', '서대문구'), 
-    #     ('마포구', '마포구'), 
-    #     ('양천구', '양천구'), 
-    #     ('강서구', '강서구'), 
-    #     ('구로구', '구로구'), 
-    #     ('금천구', '금천구'), 
-    #     ('영등포구', '영등포구'), 
-    #     ('동작구', '동작구'), 
-    #     ('관악구', '관악구'), 
-    #     ('서초구', '서초구'), 
-    #     ('강남구', '강남구'), 
-    #     ('송파구', '송파구'), 
-    #     ('강동구', '강동구')
-    # ]
-#, choices=SEOUL_CHOICES
-#, choices=IS_OB_CHOICES
 
-    user = models.ForeignKey(CustomUser, null=True, on_delete=models.CASCADE)
+'''
+{"병원명":"김은주산부인과의원",
+"주소":"서울 구로구 신도림동",
+"구":"구로구",
+"예약가능여부":null,
+"진료시작시각":"10:00에 진료 시작",
+"방문자리뷰":"방문자 리뷰 428",
+"블로그리뷰":"블로그 리뷰 116",
+"산부인과전문의수":"산부인과전문의 1명",
+"기타전문의여부":null}
+'''
+
+class Board(models.Model):
+    # user = models.ForeignKey(CustomUser, null=True, on_delete=models.CASCADE)
     hospital_name = models.CharField(max_length=100)
-    region = models.CharField(max_length=100)
-    ob = models.CharField(max_length=100) #산과여부
-    textbox = models.TextField(max_length=1000)
+    address = models.CharField(max_length=100,null=True)
+    gu=models.CharField(max_length=100,null=True)
+    reservation=models.CharField(max_length=100,null=True)
+    visitcnt=models.IntegerField()
+    blogcnt=models.IntegerField()
+    maindoctorcnt=models.IntegerField()
+    
+    # ob = models.CharField(max_length=100) #산과여부
+
+
+class Comment(models.Model):
+    user=models.ForeignKey(CustomUser,null=True,on_delete=models.CASCADE,
+                           related_name='comments')
+    board=models.ForeignKey(Board, null=True,on_delete=models.CASCADE,
+                            related_name='comments')
+
+    title=models.CharField(max_length=100)
+    body=models.TextField(max_length=1000)
     date = models.DateTimeField(auto_now_add=True)
+    # star=models.CharField(max_length=100)  # 나중에 다시 확인
+    star=models.IntegerField()
+
+
+
+class Dongdaemoon(models.Model):
+    pass
