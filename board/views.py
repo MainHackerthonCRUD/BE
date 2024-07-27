@@ -22,9 +22,9 @@ with open(file_path, 'r', encoding='utf-8') as file:
 datasave=[]
 
 # board/post/
-@api_view(['GET'])
+@api_view(['POST'])
 def board_post(request):
-    if request.method=='GET':
+    if request.method=='POST':
         for data in datas:
             tempdata={}
             for i in data:
