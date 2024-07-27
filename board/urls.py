@@ -22,7 +22,7 @@ urlpatterns = [
 
 
     # 구 종류
-    path('<str:gu>/',find_gu),
+    #path('<str:gu>/',find_gu),
 
 
 
