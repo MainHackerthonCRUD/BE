@@ -113,11 +113,13 @@ class SaveDBAPI(APIView):
 # board/home/
 @api_view(['GET']) 
 def board_list(request):
-    if request.method =='GET':
-        boards = Board.objects.all()
-        serializer = BoardListSerializer(boards, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
+    try:
+        if request.method =='GET':
+            boards = Board.objects.all()
+            serializer = BoardListSerializer(boards, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+    except Board.DoesNotExist: 
+        return Response(status=status.HTTP_404_NOT_FOUND)
 '''
 한 블로그 조회
 '''
