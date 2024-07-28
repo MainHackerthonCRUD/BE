@@ -17,7 +17,7 @@ from member.models import CustomUser
 class Board(models.Model):
     hospital_name = models.CharField(max_length=100)
     address = models.CharField(max_length=100,null=True)
-    #gu=models.CharField(max_length=100,null=True)
+    gu=models.CharField(max_length=100,null=True)
     reservation=models.CharField(max_length=100,null=True)
     visitcnt=models.IntegerField()
     blogcnt=models.IntegerField()
