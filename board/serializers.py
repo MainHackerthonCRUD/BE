@@ -1,18 +1,10 @@
 from rest_framework import serializers
 from .models import *
 from member.models import CustomUser
+from .models import Comment
+from django.utils import timezone
+from django.db.models import Avg,Sum
 
-
-'''
-class BoardDetailSerializer(serializers.ModelSerializer):
-    # user = serializers.SerializerMethodField()
-    comments=CommentResponseSerializer(many=True,read_only=True)
-    class Meta:
-        model = Board
-        fields = ['id','hospital_name','address','comments']
-    # def get_user(self, obj):
-    #     return obj.user.nickname
-'''
 class HospitalSerializer(serializers.ModelSerializer):
     class Meta:
         model = Board
@@ -25,7 +17,6 @@ class MypageCommentSerializer(serializers.ModelSerializer):
         fields=['title','date','star']
 
 
-from django.db.models import Avg,Sum
 
 # user로부터 comment 역참조
 class MypageSerializer(serializers.ModelSerializer):
@@ -47,8 +38,6 @@ class MypageSerializer(serializers.ModelSerializer):
         return avg_star if avg_star is not None else 0
         
 
-
-
 # # gu 시리얼라이저
 # class GuSerializer(serializers.ModelSerializer):
 #     class Meta:
@@ -57,14 +46,8 @@ class MypageSerializer(serializers.ModelSerializer):
 #                 'maindoctorcnt']
        
 
-
-
-
-        
-
 # json으로부터 병원 객체 저장
 class BoardPostSerializer(serializers.ModelSerializer):
-    
     class Meta:
         model=Board
         fields=['id','hospital_name','address','gu','reservation','visitcnt','blogcnt','maindoctorcnt']
@@ -72,13 +55,9 @@ class BoardPostSerializer(serializers.ModelSerializer):
 
 # 병원 객체 리스트 보여주기
 class BoardListSerializer(serializers.ModelSerializer):
-    # user = serializers.SerializerMethodField()
-
     class Meta:
         model = Board
-        fields = ['id','hospital_name', 'address','gu','reservation','visitcnt','blogcnt','maindoctorcnt']
-    # def get_user(self, obj):
-    #     return obj.user.nickname
+        fields = ['id','hospital_name', 'address','gu','reservation']
 
 
 '''
@@ -94,8 +73,6 @@ class Comment(models.Model):
 '''
 
 
-from .models import Comment
-from django.utils import timezone
 
 # Comment 가져오기
 class CommentResponseSerializer(serializers.ModelSerializer):
@@ -127,14 +104,7 @@ class BoardDetailSerializer(serializers.ModelSerializer):
     comments=CommentResponseSerializer(many=True,read_only=True)
     class Meta:
         model = Board
-        fields = ['id','hospital_name','address','comments']
-    # def get_user(self, obj):
-    #     return obj.user.nickname
-
-# read_only=True를 설정하면 직렬화 응답에서만 사용되고 입력되는 것을 방지할 수 있음.
-
-
-
+        fields = fields=['id','hospital_name','address','gu','reservation','visitcnt','blogcnt','maindoctorcnt','comments']
 
 '''
 class Comment(models.Model):
@@ -150,9 +120,7 @@ class Comment(models.Model):
 
 
 # 리뷰 작성
-# 리뷰 저장
 class CommentRequestSerializer(serializers.ModelSerializer):
-    
     class Meta:
         model=Comment
         fields=['title','body','star']
@@ -173,14 +141,3 @@ class CommentResponseSerializer(serializers.ModelSerializer):
         nickname=obj.user.nickname
         return nickname
 
-    
-    
-    
-    '''
-{
-"title":"sdf",
-"body":"sdf",
-"star":3
-}
-    '''
-    
