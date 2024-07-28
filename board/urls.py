@@ -9,16 +9,16 @@ urlpatterns = [
     path('home/', board_list),
 
     # 병원 데이터 저장 - 한번만 실행/접속
-    path('post/', HospitalAPIView.as_view(),),
+    path('post/', data_post,),
     
     # 병원 객체 조회
-    path('home/<int:pk>/',board_detail),
+    #path('home/<int:pk>/',board_detail),
 
     # 병원 객체에 대해 리뷰 작성
-    path('home/<int:pk>/comments/',review_post),
+    #ath('home/<int:pk>/comments/',review_post),
 
     # mypage
-    path('mypage/<int:pk>/',mypage),
+    #path('mypage/<int:pk>/',mypage),
 
 
     # 구 종류

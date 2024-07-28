@@ -67,7 +67,7 @@ class BoardPostSerializer(serializers.ModelSerializer):
     
     class Meta:
         model=Board
-        fields=['id','hospital_name','address','reservation','visitcnt','blogcnt','maindoctorcnt']
+        fields=['id','hospital_name','address','gu','reservation','visitcnt','blogcnt','maindoctorcnt']
 
 
 # 병원 객체 리스트 보여주기
@@ -76,8 +76,7 @@ class BoardListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Board
-        fields = ['id','hospital_name', 'address','reservation','visitcnt','blogcnt',
-                'maindoctorcnt']
+        fields = ['id','hospital_name', 'address','gu','reservation','visitcnt','blogcnt','maindoctorcnt']
     # def get_user(self, obj):
     #     return obj.user.nickname
 

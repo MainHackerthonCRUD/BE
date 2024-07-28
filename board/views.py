@@ -12,7 +12,7 @@ from .permissions import IsOwnerOrReadOnly
 import requests
 from .serializers import *
 import json
-from .serializers import SaveHospitalToDBSerializer
+#from .serializers import SaveHospitalToDBSerializer
 # 초반 api
 # #file_path='C:/Users/user/Desktop/hackerthon05/hospital_list_withGU.json'
 # file_path = "C:\Users\eunji\OneDrive\바탕 화면\hack\merged_df_UTF.json"
@@ -108,9 +108,18 @@ from .serializers import SaveHospitalToDBSerializer
 기타전문의여부
 
 '''
-class HospitalAPIView(APIView):
-    def post(self, request):
-        serializer = HospitalSerializer(data=request.data)
+# class HospitalAPIView(APIView):
+#     def post(self, request):
+#         serializer = HospitalSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(['POST'])
+def data_post(request):
+    if request.method=='POST':
+        serializer = BoardPostSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -126,100 +135,100 @@ def board_list(request):
                 return Response(serializer.data, status=status.HTTP_200_OK)
             except Board.DoesNotExist: 
                 return Response(status=status.HTTP_404_NOT_FOUND)
-'''
-한 블로그 조회
-'''
-# board/home/<int:pk>/
-@api_view(['GET','PUT','DELETE'])
-def board_detail(request, pk):
-    try: 
-        board = Board.objects.get(pk=pk)
-        if request.method == 'GET':
-            serializer = BoardDetailSerializer(board)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        elif request.method =='PUT':
-            serializer = BoardDetailSerializer(board, data=request.data)
-            if serializer.is_valid():
-                board = serializer.save(user = request.user)
-                result = BoardDetailSerializer(board)
-                return Response(result.data,status=status.HTTP_200_OK)
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-        elif request.method =='DELETE':
-            board.delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
-    except Board.DoesNotExist: 
-        return Response(status=status.HTTP_404_NOT_FOUND)
+# '''
+# 한 블로그 조회
+# '''
+# # board/home/<int:pk>/
+# @api_view(['GET','PUT','DELETE'])
+# def board_detail(request, pk):
+#     try: 
+#         board = Board.objects.get(pk=pk)
+#         if request.method == 'GET':
+#             serializer = BoardDetailSerializer(board)
+#             return Response(serializer.data, status=status.HTTP_200_OK)
+#         elif request.method =='PUT':
+#             serializer = BoardDetailSerializer(board, data=request.data)
+#             if serializer.is_valid():
+#                 board = serializer.save(user = request.user)
+#                 result = BoardDetailSerializer(board)
+#                 return Response(result.data,status=status.HTTP_200_OK)
+#             return Response(status=status.HTTP_400_BAD_REQUEST)
+#         elif request.method =='DELETE':
+#             board.delete()
+#             return Response(status=status.HTTP_204_NO_CONTENT)
+#     except Board.DoesNotExist: 
+#         return Response(status=status.HTTP_404_NOT_FOUND)
 
 
-# 리뷰 작성
-@api_view(['POST'])
-def review_post(request,pk):
-    if request.method=='POST':
-        post=Board.objects.get(pk=pk)
-        serializer=CommentRequestSerializer(data=request.data)
-        flag=True
-        if serializer.is_valid():
-            comment=serializer.save(board=post,user=request.user)
-            # if flag:
-            #     print(request.user)
-            response=CommentResponseSerializer(comment)
-            return Response(response.data,status=status.HTTP_201_CREATED)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+# # 리뷰 작성
+# @api_view(['POST'])
+# def review_post(request,pk):
+#     if request.method=='POST':
+#         post=Board.objects.get(pk=pk)
+#         serializer=CommentRequestSerializer(data=request.data)
+#         flag=True
+#         if serializer.is_valid():
+#             comment=serializer.save(board=post,user=request.user)
+#             # if flag:
+#             #     print(request.user)
+#             response=CommentResponseSerializer(comment)
+#             return Response(response.data,status=status.HTTP_201_CREATED)
+#         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-'''
-리뷰 저장할 때 user=request.user로 연결해서 저장했음
-근데 유저 통해서 리뷰 불러오려고 하면 연결이 안 돼있는 것 같음
-확인할 것.
-모든 데이터 다 지우거나 리뷰 데이터 뭐 있는지 확인하거나 해야할 듯
-유저 많이 지워서 지금 존재하는 유저 id 확인해서 pk 수정해서 접속해볼 것
-'''
+# '''
+# 리뷰 저장할 때 user=request.user로 연결해서 저장했음
+# 근데 유저 통해서 리뷰 불러오려고 하면 연결이 안 돼있는 것 같음
+# 확인할 것.
+# 모든 데이터 다 지우거나 리뷰 데이터 뭐 있는지 확인하거나 해야할 듯
+# 유저 많이 지워서 지금 존재하는 유저 id 확인해서 pk 수정해서 접속해볼 것
+# '''
     
     
-'''
-comment=serializer.save(board=post)
-save() 메서드 내부 작동 방식
+# '''
+# comment=serializer.save(board=post)
+# save() 메서드 내부 작동 방식
 
-- serializer.save() 메서드가 호출되면, 기본적으로 create 메서드가 호출되어
-새로운 Comment 인스턴스가 생성됨
-'''
-'''
-{
-"title":"sfds",
-"body":"dsf",
-"star":"sdf"
-}
+# - serializer.save() 메서드가 호출되면, 기본적으로 create 메서드가 호출되어
+# 새로운 Comment 인스턴스가 생성됨
+# '''
+# '''
+# {
+# "title":"sfds",
+# "body":"dsf",
+# "star":"sdf"
+# }
 
-'''
-'''
-class MypageSerializer(serializers.ModelSerializer):
+# '''
+# '''
+# class MypageSerializer(serializers.ModelSerializer):
     
-    comments=MypageCommentSerializer(many=True,read_only=True)
+#     comments=MypageCommentSerializer(many=True,read_only=True)
 
-    class Meta:
-        model=CustomUser
-        fields=['nickname','comments']
-'''
-# 마이페이지
-# board/mypage/
-@api_view(['GET'])
-def mypage(request,pk):
-    if request.method=='GET':
-        user=CustomUser.objects.get(nickname='hongddd')
-        # pk값 뭐로 할 지 생각하고 수정하기
-        serializer=MypageSerializer(user)
-        return Response(serializer.data,status=status.HTTP_200_OK)
+#     class Meta:
+#         model=CustomUser
+#         fields=['nickname','comments']
+# '''
+# # 마이페이지
+# # board/mypage/
+# @api_view(['GET'])
+# def mypage(request,pk):
+#     if request.method=='GET':
+#         user=CustomUser.objects.get(nickname='hongddd')
+#         # pk값 뭐로 할 지 생각하고 수정하기
+#         serializer=MypageSerializer(user)
+#         return Response(serializer.data,status=status.HTTP_200_OK)
 
 
  
 
 
-# # 구에 따라 분류
-# @api_view(['GET'])
-# def find_gu(request,gu):
-#     if request.method=='GET':
-#         locations=Board.objects.filter(gu=gu)
-#         serializer=GuSerializer(locations,many=True)
-#         return Response(serializer.data,status=status.HTTP_200_OK)
+# # # 구에 따라 분류
+# # @api_view(['GET'])
+# # def find_gu(request,gu):
+# #     if request.method=='GET':
+# #         locations=Board.objects.filter(gu=gu)
+# #         serializer=GuSerializer(locations,many=True)
+# #         return Response(serializer.data,status=status.HTTP_200_OK)
 
 
 
