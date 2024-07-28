@@ -12,7 +12,7 @@ urlpatterns = [
     path('post/', data_post,),
     
     # 병원 객체 조회
-    path('<int:pk>/',board_detail),
+    path('hospital/<int:pk>/',board_detail),
 
     # 병원 객체에 대해 리뷰 작성
     path('<int:pk>/comment/',comment_post),
