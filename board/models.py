@@ -19,9 +19,9 @@ class Board(models.Model):
     address = models.CharField(max_length=100,null=True)
     gu=models.CharField(max_length=100,null=True)
     reservation=models.CharField(max_length=100,null=True)
-    visitcnt=models.IntegerField()
-    blogcnt=models.IntegerField()
-    maindoctorcnt=models.IntegerField()
+    visitcnt=models.CharField(max_length=100,null=True)
+    blogcnt=models.CharField(max_length=100,null=True)
+    maindoctorcnt=models.CharField(max_length=100,null=True)
 
 
 
