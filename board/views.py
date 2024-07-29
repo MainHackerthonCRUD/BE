@@ -57,6 +57,14 @@ def comment_post(request,pk):
             return Response(response.data, status=status.HTTP_201_CREATED)
           return Response(status=status.HTTP_400_BAD_REQUEST)
 
+
+@api_view(['GET'])
+def comment_list(request, pk):
+    if request.method == 'GET':
+        board = get_object_or_404(Board, pk=pk)
+        comments = Comment.objects.filter(board=board)
+        response = CommentResponseSerializer(comments, many=True)
+        return Response(response.data, status=status.HTTP_200_OK)
 # # 마이페이지
 # # board/mypage/
 # @api_view(['GET'])
