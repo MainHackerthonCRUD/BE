@@ -25,8 +25,5 @@ urlpatterns = [
     path('search/<str:name>/', hospital_name),
 
     # 구 검색
-    path('search/<str:gu>/',hospital_gu),
-
-
-
+    path('searchgu/<str:gu>/',hospital_gu),
 ]
