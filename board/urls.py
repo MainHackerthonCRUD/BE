@@ -16,8 +16,8 @@ urlpatterns = [
 
     # 병원 객체에 대해 리뷰 작성
     path('<int:pk>/comment/',comment_post),
-    
-    path('<int:pk>/commentget/', comment_list)
+
+    path('<int:pk>/commentget/', comment_list),
     # mypage
     #path('mypage/<int:pk>/',mypage),
 
