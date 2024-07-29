@@ -60,16 +60,24 @@ def comment_post(request,pk):
             return Response(response.data, status=status.HTTP_201_CREATED)
           return Response(status=status.HTTP_400_BAD_REQUEST)
 
-# 마이페이지
-# board/mypage/
+
 @api_view(['GET'])
-def mypage(request,pk):
-    if request.method=='GET':
-        user=CustomUser.objects.get(nickname='hongddd')
-        # pk값 뭐로 할 지 생각하고 수정하기
-        serializer=MypageSerializer(user)
-        return Response(serializer.data,status=status.HTTP_200_OK)
-    
+def comment_list(request, pk):
+    if request.method == 'GET':
+        board = get_object_or_404(Board, pk=pk)
+        comments = Comment.objects.filter(board=board)
+        response = CommentResponseSerializer(comments, many=True)
+        return Response(response.data, status=status.HTTP_200_OK)
+# # 마이페이지
+# # board/mypage/
+# @api_view(['GET'])
+# def mypage(request,pk):
+#     if request.method=='GET':
+#         user=CustomUser.objects.get(nickname='hongddd')
+#         # pk값 뭐로 할 지 생각하고 수정하기
+#         serializer=MypageSerializer(user)
+#         return Response(serializer.data,status=status.HTTP_200_OK)
+
 # 이름 검색 api
 @api_view(['GET'])
 def hospital_name(request, name):
