@@ -12,6 +12,7 @@ urlpatterns = [
     path('post/', data_post,),
     
     # 병원 객체 조회
+    # 프론트 필요 없음
     path('hospital/<int:pk>/',board_detail),
 
     # 병원 객체에 대해 리뷰 작성

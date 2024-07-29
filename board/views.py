@@ -23,6 +23,7 @@ def data_post(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 # 병원 객체 리스트 보기
 @api_view(['GET']) 
 def board_list(request):
@@ -33,6 +34,8 @@ def board_list(request):
                 return Response(serializer.data, status=status.HTTP_200_OK)
             except Board.DoesNotExist: 
                 return Response(status=status.HTTP_404_NOT_FOUND)
+
+
 
 # 병원 객체 상세보기
 @api_view(['GET'])
@@ -57,15 +60,15 @@ def comment_post(request,pk):
             return Response(response.data, status=status.HTTP_201_CREATED)
           return Response(status=status.HTTP_400_BAD_REQUEST)
 
-# # 마이페이지
-# # board/mypage/
-# @api_view(['GET'])
-# def mypage(request,pk):
-#     if request.method=='GET':
-#         user=CustomUser.objects.get(nickname='hongddd')
-#         # pk값 뭐로 할 지 생각하고 수정하기
-#         serializer=MypageSerializer(user)
-#         return Response(serializer.data,status=status.HTTP_200_OK)
+# 마이페이지
+# board/mypage/
+@api_view(['GET'])
+def mypage(request,pk):
+    if request.method=='GET':
+        user=CustomUser.objects.get(nickname='hongddd')
+        # pk값 뭐로 할 지 생각하고 수정하기
+        serializer=MypageSerializer(user)
+        return Response(serializer.data,status=status.HTTP_200_OK)
     
 # 이름 검색 api
 @api_view(['GET'])

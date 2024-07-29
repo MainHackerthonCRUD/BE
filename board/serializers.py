@@ -98,6 +98,7 @@ class CommentResponseSerializer(serializers.ModelSerializer):
 
 
 # board/home/<int:pk>/
+# -> https://obspital.shop/board/search/<str:name>/
 # 병원 객체 선택
 class BoardDetailSerializer(serializers.ModelSerializer):
     # user = serializers.SerializerMethodField()
