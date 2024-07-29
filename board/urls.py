@@ -17,7 +17,7 @@ urlpatterns = [
     # 병원 객체에 대해 리뷰 작성
     path('<int:pk>/comment/',comment_post),
 
-    path('<int:pk>/commentget/', comment_list),
+    #path('<int:pk>/commentget/', comment_list),
     # mypage
     #path('mypage/<int:pk>/',mypage),
 
@@ -25,5 +25,5 @@ urlpatterns = [
     path('search/<str:name>/', hospital_name),
 
     # 구 검색
-    path('searchgu/<str:gu>/',hospital_gu),
+    #path('searchgu/<str:gu>/',hospital_gu),
 ]
