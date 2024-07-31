@@ -195,71 +195,73 @@ def review_put_delete(request,board_pk,comment_pk):
 # # file_path = "C:\Users\eunji\OneDrive\바탕 화면\hack\merged_df_UTF.json"
 
 # file_path='C:/Users/user/Desktop/hackerthon05/hospital_list_withGU.json'
-file_path='C:/Users/user/Desktop/hackerthontest/hospital_list_withGU.json'
+# 이 아래로 다 주석 처리
 
-with open(file_path, 'r', encoding='utf-8') as file:
-    datas = json.load(file)
+# file_path='C:/Users/user/Desktop/hackerthontest/hospital_list_withGU.json'
+
+# with open(file_path, 'r', encoding='utf-8') as file:
+#     datas = json.load(file)
 
 
 
-# board/post/
-@api_view(['POST'])
-def board_post(request):
-    if request.method=='POST':
-        for data in datas:
-            tempdata={}
-            for i in data:
-                if i=='병원명':
-                    tempdata['hospital_name']=data[i]
-                elif i=='주소':
-                    tempdata['address']=data[i]
+# # board/post/
+# @api_view(['POST'])
+# def board_post(request):
+#     if request.method=='POST':
+#         for data in datas:
+#             tempdata={}
+#             for i in data:
+#                 if i=='병원명':
+#                     tempdata['hospital_name']=data[i]
+#                 elif i=='주소':
+#                     tempdata['address']=data[i]
 
-                elif i=='구':
-                    tempdata['gu']=data[i]
-                    # print(data[i])
+#                 elif i=='구':
+#                     tempdata['gu']=data[i]
+#                     # print(data[i])
 
-                elif i=='예약가능여부':
-                    tempdata['reservation']=data[i]
-                elif i=='방문자리뷰':
-                    tempdata['visitcnt']=data[i].split()[2]
-                    if ',' in tempdata['visitcnt']:
-                        tempdata['visitcnt']=tempdata['visitcnt'].replace(',',"")
-                elif i=='블로그리뷰':
-                    try:
-                        tempdata['blogcnt']=data[i].split()[2]
-                        if ',' in tempdata['blogcnt']:
-                            tempdata['blogcnt']=tempdata['blogcnt'].replace(',',"")
-                            # 1000번대가 존재하는지 확인
-                    except:
-                        tempdata['blogcnt']=None
-                elif i=='산부인과전문의수':
-                    try:
-                        tempdata['maindoctorcnt']=data[i].split()[1].replace('명','')
-                    except:
-                        tempdata['maindoctorcnt']=None
-            # print(tempdata)
+#                 elif i=='예약가능여부':
+#                     tempdata['reservation']=data[i]
+#                 elif i=='방문자리뷰':
+#                     tempdata['visitcnt']=data[i].split()[2]
+#                     if ',' in tempdata['visitcnt']:
+#                         tempdata['visitcnt']=tempdata['visitcnt'].replace(',',"")
+#                 elif i=='블로그리뷰':
+#                     try:
+#                         tempdata['blogcnt']=data[i].split()[2]
+#                         if ',' in tempdata['blogcnt']:
+#                             tempdata['blogcnt']=tempdata['blogcnt'].replace(',',"")
+#                             # 1000번대가 존재하는지 확인
+#                     except:
+#                         tempdata['blogcnt']=None
+#                 elif i=='산부인과전문의수':
+#                     try:
+#                         tempdata['maindoctorcnt']=data[i].split()[1].replace('명','')
+#                     except:
+#                         tempdata['maindoctorcnt']=None
+#             # print(tempdata)
             
-            serializer=BoardPostSerializer(data=tempdata)
-            if serializer.is_valid():
-                save=serializer.save()
-                # response=BoardPostSerializer(save)
-                # return Response(response.data,status=status.HTTP_201_CREATED)
+#             serializer=BoardPostSerializer(data=tempdata)
+#             if serializer.is_valid():
+#                 save=serializer.save()
+#                 # response=BoardPostSerializer(save)
+#                 # return Response(response.data,status=status.HTTP_201_CREATED)
 
                 
 
 
 
-        boards=Board.objects.all()
-        serializers=BoardPostSerializer(boards,many=True)
+#         boards=Board.objects.all()
+#         serializers=BoardPostSerializer(boards,many=True)
 
 
 
 
-        return Response(serializers.data,status=status.HTTP_201_CREATED)
+#         return Response(serializers.data,status=status.HTTP_201_CREATED)
                 
 
 
-
+# 여기까지 주석
 
 
 
