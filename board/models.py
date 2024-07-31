@@ -34,7 +34,3 @@ class Comment(models.Model):
     star=models.CharField(max_length=100) 
 
 
-
-
-class Dongdaemoon(models.Model):
-    pass
