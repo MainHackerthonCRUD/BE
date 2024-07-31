@@ -35,7 +35,32 @@ class MypageSerializer(serializers.ModelSerializer):
     
     def get_star_average(self,obj):
         avg_star=obj.comments.aggregate(Avg('star')).get('star__avg')
-        return avg_star if avg_star is not None else 0
+        if avg_star==None:
+            return 0
+        elif avg_star<=0.25:
+            return 0
+        elif 0.25<avg_star<=0.75:
+            return 0.5
+        elif 0.75<avg_star<=1.25:
+            return 1
+        elif 1.25<avg_star<=1.75:
+            return 1.5
+        elif 1.75<avg_star<=2.25:
+            return 2
+        elif 2.25<avg_star<=2.75:
+            return 2.5
+        elif 2.75<avg_star<=3.25:
+            return 3
+        elif 3.25<avg_star<=3.75:
+            return 3.5
+        elif 3.75<avg_star<=4.25:
+            return 4
+        elif 4.25<avg_star<=4.75:
+            return 4.5
+        elif 4.75<avg_star:
+            return 5
+
+        # return avg_star if avg_star is not None else 0
         
 
 # # gu 시리얼라이저
@@ -124,7 +149,7 @@ class Comment(models.Model):
 class CommentRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model=Comment
-        fields=['title','body','star']
+        fields=['id','title','body','star']
 
 # 리뷰 반환
 class CommentResponseSerializer(serializers.ModelSerializer):
@@ -132,7 +157,7 @@ class CommentResponseSerializer(serializers.ModelSerializer):
     nickname=serializers.SerializerMethodField()
     class Meta:
         model=Comment
-        fields=['nickname','title','body','created_at','star']
+        fields=['id','nickname','title','body','created_at','star']
 
     def get_created_at(self,obj):
         # db는 안 바뀌고 클라이언트한테 보낼 때만 바뀜.
