@@ -52,7 +52,7 @@ urlpatterns = [
     path('hospital/<int:pk>/',board_detail),
 
     # 임시로 만든 병원 전체 POST
-    path('homehonggyu/',board_post),
+    # path('homehonggyu/',board_post),
 
     # 병원 데이터 저장 - 한번만 실행/접속
     path('post/', data_post,),
