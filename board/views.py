@@ -41,20 +41,23 @@ def board_list(request):
 @api_view(['GET'])
 def board_detail(request, pk):
     if request.method =='GET':
-            try:
-                board = Board.objects.get(pk=pk)
-                serializer = BoardDetailSerializer(board)
-                return Response(serializer.data, status=status.HTTP_200_OK)
-            except Board.DoesNotExist: 
-                return Response(status=status.HTTP_404_NOT_FOUND)  
+        try:
+            board = Board.objects.get(pk=pk)
+            serializer = BoardDetailSerializer(board)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Board.DoesNotExist: 
+            return Response(status=status.HTTP_404_NOT_FOUND)  
 
 
 '''
 {
+
 "title":"sdf",
 "body":"sdf",
 "star":3
 }
+
+
 '''
 # 리뷰 작성
 @api_view(['POST'])
