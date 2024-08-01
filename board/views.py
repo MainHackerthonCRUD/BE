@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated,IsAuthenticatedOrReadOnly
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from .models import Board
 from rest_framework.response import Response
@@ -12,6 +12,7 @@ from .permissions import IsOwnerOrReadOnly
 import requests
 from .serializers import *
 import json
+
 
 # DB에 JSON 붙여넣기    
 @api_view(['POST'])
@@ -89,6 +90,8 @@ def comment_list(request, pk):
 # 마이페이지
 # board/mypage/
 @api_view(['GET'])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
 def mypage(request,pk):
     if request.method=='GET':
         user=CustomUser.objects.get(nickname=pk)
@@ -131,7 +134,11 @@ def review_get(request,pk):
 
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
+
+
 @api_view(['GET','PUT','DELETE'])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticatedOrReadOnly])
 def review_put_delete(request,board_pk,comment_pk):
     try:
         board=Board.objects.get(pk=board_pk)
@@ -291,30 +298,7 @@ def review_put_delete(request,board_pk,comment_pk):
 
 
 
-'''
-{'병원명': '우아한여성의원', 
-'주소': '서울 강남구 신사동', 
-'구': '강남구', 
-'예약가능여부': '예약', 
-'진료시작시각': '10:00에 진료 시작', 
-'방문자리뷰': '방문자 리뷰 275', 
-'블로그리뷰': '블로그 리뷰 656', 
-'산부인과전문의수': '산부인과전문의\xa02명', 
-'기타전문의여부': None},
 
-'''
-'''
-병원명
-주소
-구
-예약가능여부
-진료시작시각
-방문자리뷰
-블로그리뷰
-산부인과전문의수
-기타전문의여부
-
-'''
 # class HospitalAPIView(APIView):
 #     def post(self, request):
 #         serializer = HospitalSerializer(data=request.data)
