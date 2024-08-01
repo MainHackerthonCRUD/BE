@@ -16,20 +16,10 @@ app_name = 'board'
 "password2":"asdf1234qwer",
 "nickname":"hongddd"
 }
-{
-    "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIyNTE2MzkzLCJpYXQiOjE3MjI1MTI3OTMsImp0aSI6IjEzMmY4OTJhYjRjZTQwNjZiOGFiODYzYmE1YzUwZTE5IiwidXNlcl9pZCI6MX0.nMF5mxGfojVQr4i3ugqWgSZBm04v6JO14hdaZVT7I-o",
-    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyMjU5OTE5MywiaWF0IjoxNzIyNTEyNzkzLCJqdGkiOiJjZDc0MWJjMDZiNDE0Yzk5OTM2MDBjN2FjZGU5ZDVjNSIsInVzZXJfaWQiOjF9.lphmChStwnA-LpC1BRGSsioyXrxHz07FlzyY1wqQbIo",
-    "user": {
-        "id": 1,
-        "username": "honggyu",
-        "password": "pbkdf2_sha256$720000$pxmEvSPDgrdZwPE6m46yoG$6Kpdw16Chx2hzzLwtEX3uBoetCTbsE/3wZHQV5RFNrM=",
-        "nickname": "hongddd"
-    }
-}
-로컬
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIyNDk1MzY4LCJpYXQiOjE3MjI0OTE3NjgsImp0aSI6Ijk3NzkwYjJmNGE4MTQ0NzhhMGE1ZDc2NzhmOWE5MmY5IiwidXNlcl9pZCI6OH0.0I5UhBAH727jHahf0XKmmr4ihAvh7Eq3kPSvg1Opago
-# 서버
-Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIyNTE1NDc0LCJpYXQiOjE3MjI1MTE4NzQsImp0aSI6ImFiZGZiODYyM2MzYzRiYjM5ZDlmZDRjZmVkMWMzNzc3IiwidXNlcl9pZCI6NX0.sD7CHWoFf_WH0m6HbcQ6-AjvVyi8nCdM49lyg4flewI
+
+
+
+
 
 {
     "id": 23,
