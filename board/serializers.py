@@ -9,8 +9,9 @@ class HospitalSerializer(serializers.ModelSerializer):
     class Meta:
         model = Board
         fields = '__all__'
-# mypage
 
+
+# mypage
 class MypageCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model=Comment
@@ -18,10 +19,29 @@ class MypageCommentSerializer(serializers.ModelSerializer):
 
 
 
+# Comment 가져오기
+class CommentResponseSerializer(serializers.ModelSerializer):
+    created_at=serializers.SerializerMethodField()
+    nickname=serializers.SerializerMethodField()
+    class Meta:
+        model=Comment
+        fields=['id','nickname','title','body','star','created_at']
+
+    def get_nickname(self,obj):
+        return obj.user.nickname if obj.user else 'Anonymous'
+
+    def get_created_at(self,obj):
+        # get_형식으로 설정해야 함.
+        # db는 안 바뀌고 클라이언트한테 보낼 때만 바뀜.
+        time=timezone.localtime(obj.date)
+        return time.strftime('%Y-%m-%d')
+
+
+
 # user로부터 comment 역참조
 class MypageSerializer(serializers.ModelSerializer):
 
-    comments=MypageCommentSerializer(many=True,read_only=True)
+    comments=CommentResponseSerializer(many=True,read_only=True)
 
     comments_count=serializers.SerializerMethodField()
     star_average=serializers.SerializerMethodField()
@@ -99,22 +119,7 @@ class Comment(models.Model):
 
 
 
-# Comment 가져오기
-class CommentResponseSerializer(serializers.ModelSerializer):
-    created_at=serializers.SerializerMethodField()
-    nickname=serializers.SerializerMethodField()
-    class Meta:
-        model=Comment
-        fields=['nickname','title','body','star','created_at']
 
-    def get_nickname(self,obj):
-        return obj.user.nickname if obj.user else 'Anonymous'
-
-    def get_created_at(self,obj):
-        # get_형식으로 설정해야 함.
-        # db는 안 바뀌고 클라이언트한테 보낼 때만 바뀜.
-        time=timezone.localtime(obj.date)
-        return time.strftime('%Y-%m-%d')
 
 # self : 현재 CommentResponseSerializer의 인스턴스를 참조함.
 #       이를 통해 인스턴스의 다른 메서드나 속성에 접근할 수 있음
