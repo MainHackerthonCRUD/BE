@@ -17,16 +17,24 @@ app_name = 'board'
 "nickname":"hongddd"
 }
 
-
-
-
-
 {
-    "id": 23,
-    "nickname": "hongddd",
+    "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIyNjA1MTAyLCJpYXQiOjE3MjI2MDE1MDIsImp0aSI6ImU3MjMxNjI3NDRmNTRjNzQ5OTQyNGE3ODA1ODM0MzE1IiwidXNlcl9pZCI6M30.TGJ35sUDWftBQUy-nmHDsEk-t_WJhGsstaeGP3uq6uo",
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyMjY4NzkwMiwiaWF0IjoxNzIyNjAxNTAyLCJqdGkiOiI0MDI1MTljOTkwOWY0NDdkODdkMzgzZWMxNjQ5OThlMiIsInVzZXJfaWQiOjN9.rTlIw7un49ah5WprOsinAs_9FYaCsAjrBUDqE4Oqx8Q",
+    "user": {
+        "id": 3,
+        "username": "honggysssu",
+        "password": "pbkdf2_sha256$720000$Zg3ay9axjCGxogbLJ8QUf7$4Rs9xEtnec/olJBm8EpFvisnwHgFJDurhMaI9MpK80s=",
+        "nickname": "hongddddddd"
+    }
+}
+
+# 댓글
+{
+    "id": 19,
+    "nickname": "hongddddddd",
     "title": "test",
     "body": "test",
-    "created_at": "2024-08-01",
+    "created_at": "2024-08-02",
     "star": "3"
 }
 '''
@@ -69,7 +77,26 @@ urlpatterns = [
 # 마이페이지
     # mypage - OK
     path('mypage/<str:pk>/',mypage),
+
+
+
+
+    # mypage -> review put
+    path('reviewput/<int:comment_pk>/',review_put),
+
+    # mypage -> review delete
+    path('reviewdelete/<int:comment_pk>/',review_delete),
     
+
+
+
+
+
+
+
+
+
+
 
 
 

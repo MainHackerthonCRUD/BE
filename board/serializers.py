@@ -172,3 +172,12 @@ class CommentResponseSerializer(serializers.ModelSerializer):
         nickname=obj.user.nickname
         return nickname
 
+
+
+
+# # 마이페이지 -> 리뷰
+# class ReturnBoardId(serializers.ModelSerializer):
+
+
+#     class Meta:
+#         model=Comment
