@@ -50,16 +50,10 @@ def board_detail(request, pk):
             return Response(status=status.HTTP_404_NOT_FOUND)  
 
 
-'''
-{
-
-"title":"sdf",
-"body":"sdf",
-"star":3
-}
 
 
-'''
+
+
 # 리뷰 작성
 @api_view(['POST'])
 def comment_post(request,pk):
@@ -173,11 +167,37 @@ def review_put_delete(request,board_pk,comment_pk):
 
 
 
+@api_view(['PUT'])
+def review_put(request,comment_pk):
+    comment=Comment.objects.get(pk=comment_pk)
+    board=comment.board
+
+    serializer=CommentRequestSerializer(comment,data=request.data)
+    if serializer.is_valid():
+        commentsave=serializer.save(board=board)
+        response=CommentResponseSerializer(commentsave)
+        return Response(response.data,status=status.HTTP_200_OK)
+    
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['DELETE'])
+def review_delete(request,comment_pk):
+    comment=Comment.objects.get(pk=comment_pk)
+    try:
+        if request.method=='DELETE':
+            comment.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        
+    except comment.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 
 
-
+# @api_view(['PUT'])
+# def review_put(request,user_id):
+#     user=CustomUser.objects.get(pk=user_id)
+#     comments=Comment.objects.get(user=user)
 
 
 
