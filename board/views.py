@@ -168,6 +168,8 @@ def review_put_delete(request,board_pk,comment_pk):
 
 
 @api_view(['PUT'])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticatedOrReadOnly])
 def review_put(request,comment_pk):
     comment=Comment.objects.get(pk=comment_pk)
     board=comment.board
@@ -181,6 +183,8 @@ def review_put(request,comment_pk):
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['DELETE'])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticatedOrReadOnly])
 def review_delete(request,comment_pk):
     comment=Comment.objects.get(pk=comment_pk)
     try:
@@ -197,8 +201,9 @@ def review_delete(request,comment_pk):
 # @api_view(['PUT'])
 # def review_put(request,user_id):
 #     user=CustomUser.objects.get(pk=user_id)
-#     comments=Comment.objects.get(user=user)
-
+#     comment=Comment.objects.get(user=user)
+#     hospital_gu=comment.board.gu
+#     print(hospital_gu)
 
 
 
