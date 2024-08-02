@@ -16,17 +16,7 @@ app_name = 'board'
 "password2":"asdf1234qwer",
 "nickname":"hongddd"
 }
-
-{
-    "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIyNjA1MTAyLCJpYXQiOjE3MjI2MDE1MDIsImp0aSI6ImU3MjMxNjI3NDRmNTRjNzQ5OTQyNGE3ODA1ODM0MzE1IiwidXNlcl9pZCI6M30.TGJ35sUDWftBQUy-nmHDsEk-t_WJhGsstaeGP3uq6uo",
-    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyMjY4NzkwMiwiaWF0IjoxNzIyNjAxNTAyLCJqdGkiOiI0MDI1MTljOTkwOWY0NDdkODdkMzgzZWMxNjQ5OThlMiIsInVzZXJfaWQiOjN9.rTlIw7un49ah5WprOsinAs_9FYaCsAjrBUDqE4Oqx8Q",
-    "user": {
-        "id": 3,
-        "username": "honggysssu",
-        "password": "pbkdf2_sha256$720000$Zg3ay9axjCGxogbLJ8QUf7$4Rs9xEtnec/olJBm8EpFvisnwHgFJDurhMaI9MpK80s=",
-        "nickname": "hongddddddd"
-    }
-}
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIyNjA3MDk5LCJpYXQiOjE3MjI2MDM0OTksImp0aSI6Ijg0ZDM3MmFjMTY1NDQ2ZjdhOTgwNGQxZmJlOWZiNDRmIiwidXNlcl9pZCI6MzN9.H0ZfzwOKpBax8SxB6ANzE0w_KcYmd3XcgPq3pFRNSI0
 
 # 댓글
 {
