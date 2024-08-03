@@ -19,23 +19,49 @@ class MypageCommentSerializer(serializers.ModelSerializer):
 
 
 
-# Comment 가져오기
+# # Comment 가져오기
+# class CommentResponseSerializer(serializers.ModelSerializer):
+#     created_at=serializers.SerializerMethodField()
+#     nickname=serializers.SerializerMethodField()
+#     class Meta:
+#         model=Comment
+#         fields=['id','nickname','title','body','star','created_at']
+
+#     def get_nickname(self,obj):
+#         return obj.user.nickname if obj.user else 'Anonymous'
+
+#     def get_created_at(self,obj):
+#         # get_형식으로 설정해야 함.
+#         # db는 안 바뀌고 클라이언트한테 보낼 때만 바뀜.
+#         time=timezone.localtime(obj.date)
+#         return time.strftime('%Y-%m-%d')
+
+
+# 리뷰 작성
+class CommentRequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Comment
+        fields=['id','title','body','star']
+
+# 리뷰 반환
 class CommentResponseSerializer(serializers.ModelSerializer):
     created_at=serializers.SerializerMethodField()
     nickname=serializers.SerializerMethodField()
+    hospital_name=serializers.SerializerMethodField()
     class Meta:
         model=Comment
-        fields=['id','nickname','title','body','star','created_at']
-
-    def get_nickname(self,obj):
-        return obj.user.nickname if obj.user else 'Anonymous'
+        fields=['id','nickname','title','body','created_at','star','hospital_name']
 
     def get_created_at(self,obj):
-        # get_형식으로 설정해야 함.
         # db는 안 바뀌고 클라이언트한테 보낼 때만 바뀜.
         time=timezone.localtime(obj.date)
         return time.strftime('%Y-%m-%d')
-
+    def get_nickname(self,obj):
+        nickname=obj.user.nickname
+        return nickname
+    def get_hospital_name(self,obj):
+        hospital_name=obj.board.hospital_name
+        return hospital_name
 
 
 # user로부터 comment 역참조
@@ -150,31 +176,7 @@ class Comment(models.Model):
 '''
 
 
-# 리뷰 작성
-class CommentRequestSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=Comment
-        fields=['id','title','body','star']
 
-# 리뷰 반환
-class CommentResponseSerializer(serializers.ModelSerializer):
-    created_at=serializers.SerializerMethodField()
-    nickname=serializers.SerializerMethodField()
-    hospital_name=serializers.SerializerMethodField()
-    class Meta:
-        model=Comment
-        fields=['id','nickname','title','body','created_at','star','hospital_name']
-
-    def get_created_at(self,obj):
-        # db는 안 바뀌고 클라이언트한테 보낼 때만 바뀜.
-        time=timezone.localtime(obj.date)
-        return time.strftime('%Y-%m-%d')
-    def get_nickname(self,obj):
-        nickname=obj.user.nickname
-        return nickname
-    def get_hospital_name(self,obj):
-        hospital_name=obj.board.hospital_name
-        return hospital_name
 
 
 
