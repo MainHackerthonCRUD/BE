@@ -160,9 +160,10 @@ class CommentRequestSerializer(serializers.ModelSerializer):
 class CommentResponseSerializer(serializers.ModelSerializer):
     created_at=serializers.SerializerMethodField()
     nickname=serializers.SerializerMethodField()
+    hospital_name=serializers.SerializerMethodField()
     class Meta:
         model=Comment
-        fields=['id','nickname','title','body','created_at','star']
+        fields=['id','nickname','title','body','created_at','star','hospital_name']
 
     def get_created_at(self,obj):
         # db는 안 바뀌고 클라이언트한테 보낼 때만 바뀜.
@@ -171,6 +172,9 @@ class CommentResponseSerializer(serializers.ModelSerializer):
     def get_nickname(self,obj):
         nickname=obj.user.nickname
         return nickname
+    def get_hospital_name(self,obj):
+        hospital_name=obj.board.hospital_name
+        return hospital_name
 
 
 
