@@ -23,6 +23,9 @@ urlpatterns = [
     path('dj/', include('dj_rest_auth.urls')),
     path('dj/registration/', include('dj_rest_auth.registration.urls')),
 
+    path('kakao/callback/',kakako_callback),
+    path('kakao/',kakao),
+
 ]
 '''
 {

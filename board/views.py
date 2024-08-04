@@ -14,6 +14,163 @@ from .serializers import *
 import json
 
 
+
+from django.shortcuts import redirect
+
+
+def kakao(request):
+    # https://obspital.shop/kakao/callback/
+    # 
+    kakao_api="https://kauth.kakao.com/oauth/authorize?"
+    redirect_uri="https://obspital.shop/kakao/callback/"
+    client_id="6bf5f3d7db0da82bb551b5e113dcc846"
+    response_type="code"
+
+    return redirect(f"{kakao_api}&client_id={client_id}&redirect_uri={redirect_uri}&response_type={response_type}")
+
+
+import requests
+from member.models import CustomUser
+
+
+
+
+
+
+
+def check_id(req_id):
+    for user in CustomUser.objects.all():
+        if user.username==req_id:
+            return True
+    return False
+
+
+
+
+
+
+'''
+https://kauth.kakao.com/oauth/authorize?client_id=6bf5f3d7db0da82bb551b5e113dcc846&redirect_uri=http://127.0.0.1:8000/kakao/callback/&response_type=code
+'''
+@api_view(['GET'])
+def kakako_callback(request):
+
+    data={
+        "grant_type"    :"authorization_code",
+        "client_id":"6bf5f3d7db0da82bb551b5e113dcc846",
+        "redirect_uri":"https://obspital.shop/kakao/callback/",
+        "code":request.GET["code"]
+    }
+    kakao_token_api="https://kauth.kakao.com/oauth/token"
+    access_token=requests.post(kakao_token_api,data=data).json()['access_token']
+    
+
+
+
+
+
+    kakao_user_api="https://kapi.kakao.com/v2/user/me"
+    header={
+        f"Authorization : Bearer ${access_token}"
+        }
+    # data={
+    #     "property_keys:['kakao_account.email']"
+    # }
+
+    # user_information=requests.get(kakao_user_api,headers=header,data=data).json()
+    # user_information=requests.get(kakao_user_api,headers=header).json()
+    user_info=requests.get("https://kapi.kakao.com/v2/user/me",headers={"Authorization":f"Bearer {access_token}"}).json()
+
+
+    for i in user_info:
+        if i=='id':
+            user_id=user_info[i]
+
+        elif i=='properties':
+            user_nickname=user_info[i]['nickname']
+
+    
+    regist_url="https://obspital.shop/dj/registration/"
+    login_url="https://obspital.shop/dj/login/"
+    regist_data={
+        "username":str(user_id),
+        "nickname":user_nickname,
+        "password1":"asdf1234qwer",
+        "password2":"asdf1234qwer"
+    }
+
+    login_data={
+        "username":str(user_id),
+        "password":"asdf1234qwer"
+    }
+    print()
+    print()
+    print(f"user_id : {user_id}")
+    print(f"user_nickname : {user_nickname}")
+    print()
+    print()
+    #-----------
+
+
+    flag=check_id(str(user_id))
+    print()
+    print()
+    print(f"flag: {flag}")
+
+    if flag:
+        # true : 존재함
+        # 로그인 후 access token 반환 받은 것으로 수정해서 보내주기
+        al_user=CustomUser.objects.get(nickname=user_nickname)
+        ans_login_data=requests.post(login_url,data=login_data).json()
+        print()
+        print()
+        print(ans_login_data)
+        for data in ans_login_data:
+            print(data)
+        
+        return Response(ans_login_data,status=status.HTTP_200_OK)
+    
+    else:
+        # false : 존재하지 않음 -> 회원가입 진행
+        regist_response=requests.post(regist_url,data=regist_data)
+        regist_response_json=regist_response.json()
+
+        print()
+        print()
+        print()
+        print('regist_response')
+        print(regist_response)
+        print()
+        
+        if regist_response.status_code==201:
+
+            # return_data={
+            #     "nickname":al_user.nickname,
+            #     "id":al_user.id,
+            #     "access_token":access_token
+            # }
+            return Response(regist_response_json,status=status.HTTP_201_CREATED)
+        else:
+            print('실패')
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        # return Response({f"access_token":{access_token}},status=status.HTTP_200_OK)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # DB에 JSON 붙여넣기    
 @api_view(['POST'])
 def data_post(request):
