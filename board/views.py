@@ -127,6 +127,8 @@ def kakako_callback(request):
     print()
     print()
     print(f"flag: {flag}")
+    print()
+    print()
 
     if flag:
         # true : 존재함
@@ -148,7 +150,7 @@ def kakako_callback(request):
     
     else:
         # false : 존재하지 않음 -> 회원가입 진행
-        regist_response=requests.post(regist_url,data=regist_data)
+        regist_response=requests.post(regist_url,data=regist_data,timeout=10)
         print()
         print()
         print()
