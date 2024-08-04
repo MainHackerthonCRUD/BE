@@ -63,6 +63,10 @@ def kakako_callback(request):
     }
     kakao_token_api="https://kauth.kakao.com/oauth/token"
     access_token=requests.post(kakao_token_api,data=data).json()['access_token']
+
+    print()
+    print()
+    print(f"access_token : {access_token}")
     
 
 
@@ -81,7 +85,11 @@ def kakako_callback(request):
     # user_information=requests.get(kakao_user_api,headers=header).json()
     user_info=requests.get("https://kapi.kakao.com/v2/user/me",headers={"Authorization":f"Bearer {access_token}"}).json()
 
-
+    print()
+    print()
+    print('user_info')
+    print(user_info)
+    
     for i in user_info:
         if i=='id':
             user_id=user_info[i]
@@ -103,6 +111,9 @@ def kakako_callback(request):
         "username":str(user_id),
         "password":"asdf1234qwer"
     }
+
+
+
     print()
     print()
     print(f"user_id : {user_id}")
@@ -120,10 +131,11 @@ def kakako_callback(request):
     if flag:
         # true : 존재함
         # 로그인 후 access token 반환 받은 것으로 수정해서 보내주기
-        al_user=CustomUser.objects.get(nickname=user_nickname)
+        # al_user=CustomUser.objects.get(nickname=user_nickname)
         ans_login_data=requests.post(login_url,data=login_data).json()
         print()
         print()
+        print("ans_login_data")
         print(ans_login_data)
         for data in ans_login_data:
             print(data)
