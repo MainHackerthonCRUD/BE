@@ -89,7 +89,7 @@ def kakako_callback(request):
     print()
     print('user_info')
     print(user_info)
-    
+
     for i in user_info:
         if i=='id':
             user_id=user_info[i]
@@ -132,26 +132,36 @@ def kakako_callback(request):
         # true : 존재함
         # 로그인 후 access token 반환 받은 것으로 수정해서 보내주기
         # al_user=CustomUser.objects.get(nickname=user_nickname)
-        ans_login_data=requests.post(login_url,data=login_data).json()
-        print()
+        ans_login_data=requests.post(login_url,data=login_data)
         print()
         print("ans_login_data")
         print(ans_login_data)
-        for data in ans_login_data:
+        ans_login_data_json=ans_login_data.json()
+        print()
+        print()
+        print("ans_login_data_json")
+        print(ans_login_data_json)
+        for data in ans_login_data_json:
             print(data)
         
-        return Response(ans_login_data,status=status.HTTP_200_OK)
+        return Response(ans_login_data_json,status=status.HTTP_200_OK)
     
     else:
         # false : 존재하지 않음 -> 회원가입 진행
         regist_response=requests.post(regist_url,data=regist_data)
-        regist_response_json=regist_response.json()
-
         print()
         print()
         print()
         print('regist_response')
         print(regist_response)
+
+        regist_response_json=regist_response.json()
+
+        print()
+        print()
+        print()
+        print('regist_response_json')
+        print(regist_response_json)
         print()
         
         if regist_response.status_code==201:
