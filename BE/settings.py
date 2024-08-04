@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
   
-    # 'corsheaders',
+    
   
 
     'board',
@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'rest_framework_simplejwt',
     'django_extensions',
+
+    'corsheaders',
   
 ]
 
@@ -70,9 +72,14 @@ MIDDLEWARE = [
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",
     "http://127.0.0.1:8000",
+
     "http://127.0.0.1:5173",
     "http://127.0.0.1:8000",
-    "http://localhost:5173",]
+    "http://localhost:5173",
+    "https://obspital.shop",
+    "https://madadoc.netlify.app",
+
+    ]
 
 CORS_ALLOW_CREDENTIALS = True
 
