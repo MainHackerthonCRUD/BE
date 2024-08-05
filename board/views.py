@@ -139,7 +139,7 @@ def kakako_callback(request):
 
         token=TokenObtainPairSerializer.get_token(kakao_user)
         kakao_access_token=str(token.access_token)
-        kakao_refresh_token=str(token.refresh)
+        kakao_refresh_token=str(token)
         print(kakao_access_token)
         
         return_data={
@@ -161,7 +161,7 @@ def kakako_callback(request):
         kakao_serializer=CustomUserSerializer(kakao_user)
         token=TokenObtainPairSerializer.get_token(kakao_user)
         kakao_access_token=str(token.access_token)
-        kakao_refresh_token=str(token.refresh)
+        kakao_refresh_token=str(token)
 
         
         return_data={
