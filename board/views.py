@@ -139,13 +139,15 @@ def kakako_callback(request):
 
         token=TokenObtainPairSerializer.get_token(kakao_user)
         kakao_access_token=str(token.access_token)
+        kakao_refresh_token=str(token.refresh_token)
         print(kakao_access_token)
         
         return_data={
             "id":kakao_serializer.data['id'],
             "nickname":kakao_serializer.data['nickname'],
             "username":kakao_serializer.data['username'],
-            "access_token":kakao_access_token
+            "access_token":kakao_access_token,
+            "refresh_token":kakao_refresh_token
         }
         print(return_data)
 
@@ -159,13 +161,15 @@ def kakako_callback(request):
         kakao_serializer=CustomUserSerializer(kakao_user)
         token=TokenObtainPairSerializer.get_token(kakao_user)
         kakao_access_token=str(token.access_token)
+        kakao_refresh_token=str(token.refresh_token)
 
         
         return_data={
             "username":kakao_serializer.data['username'],
             "id":kakao_serializer.data['id'],
             "nickname":kakao_serializer.data['nickname'],
-            "access_token":kakao_access_token
+            "access_token":kakao_access_token,
+            "refresh_token":kakao_refresh_token
         }
         
 
