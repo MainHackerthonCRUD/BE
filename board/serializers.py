@@ -40,7 +40,7 @@ class MypageCommentSerializer(serializers.ModelSerializer):
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model=CustomUser
-        fields=['id','nickname']
+        fields=['id','nickname','username']
 
 # 리뷰 작성
 class CommentRequestSerializer(serializers.ModelSerializer):

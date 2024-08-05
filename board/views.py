@@ -144,6 +144,7 @@ def kakako_callback(request):
         return_data={
             "id":kakao_serializer.data['id'],
             "nickname":kakao_serializer.data['nickname'],
+            "username":kakao_serializer.data['username'],
             "access_token":kakao_access_token
         }
         print(return_data)
@@ -152,7 +153,7 @@ def kakako_callback(request):
     
     else:
         # false : 존재하지 않음 -> 회원가입 진행
-        kakao_user=CustomUser(nickname=user_nickname)
+        kakao_user=CustomUser(nickname=user_nickname,username=str(user_id))
         kakao_user.save()
         kakao_user=CustomUser.objects.get(nickname=user_nickname)
         kakao_serializer=CustomUserSerializer(kakao_user)
@@ -161,6 +162,7 @@ def kakako_callback(request):
 
         
         return_data={
+            "username":kakao_serializer.data['username'],
             "id":kakao_serializer.data['id'],
             "nickname":kakao_serializer.data['nickname'],
             "access_token":kakao_access_token
