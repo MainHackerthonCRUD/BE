@@ -46,6 +46,9 @@ def check_id(req_id):
 
 
 
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
+
 
 
 
@@ -131,53 +134,52 @@ def kakako_callback(request):
     print()
 
     if flag:
-        # true : 존재함
-        # 로그인 후 access token 반환 받은 것으로 수정해서 보내주기
-        # al_user=CustomUser.objects.get(nickname=user_nickname)
-        ans_login_data=requests.post(login_url,data=login_data)
-        print()
-        print("ans_login_data")
-        print(ans_login_data)
-        ans_login_data_json=ans_login_data.json()
-        print()
-        print()
-        print("ans_login_data_json")
-        print(ans_login_data_json)
-        for data in ans_login_data_json:
-            print(data)
+        kakao_user=CustomUser.objects.get(nickname=user_nickname)
+        kakao_serializer=CustomUserSerializer(kakao_user)
+
+        token=TokenObtainPairSerializer.get_token(kakao_user)
+        kakao_access_token=str(token.access_token)
+        print(kakao_access_token)
         
-        return Response(ans_login_data_json,status=status.HTTP_200_OK)
+        return_data={
+            "id":kakao_serializer.data['id'],
+            "nickname":kakao_serializer.data['nickname'],
+            "access_token":kakao_access_token
+        }
+        print(return_data)
+
+        return Response(return_data,status=status.HTTP_200_OK)
     
     else:
         # false : 존재하지 않음 -> 회원가입 진행
-        regist_response=requests.post(regist_url,data=regist_data,timeout=10)
-        print()
-        print()
-        print()
-        print('regist_response')
-        print(regist_response)
+        kakao_user=CustomUser(nickname=user_nickname)
+        kakao_user.save()
+        kakao_user=CustomUser.objects.get(nickname=user_nickname)
+        token=TokenObtainPairSerializer.get_token(kakao_user)
+        kakao_access_token=str(token.access_token)
 
-        regist_response_json=regist_response.json()
-
-        print()
-        print()
-        print()
-        print('regist_response_json')
-        print(regist_response_json)
-        print()
         
-        if regist_response.status_code==201:
+        return_data={
+            "id":kakao_serializer.data['id'],
+            "nickname":kakao_serializer.data['nickname'],
+            "access_token":kakao_access_token
+        }
+        
 
-            # return_data={
-            #     "nickname":al_user.nickname,
-            #     "id":al_user.id,
-            #     "access_token":access_token
-            # }
-            return Response(regist_response_json,status=status.HTTP_201_CREATED)
-        else:
-            print('실패')
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-        # return Response({f"access_token":{access_token}},status=status.HTTP_200_OK)
+        return Response(return_data,status=status.HTTP_200_OK)
+    
+
+
+        #     # return_data={
+        #     #     "nickname":al_user.nickname,
+        #     #     "id":al_user.id,
+        #     #     "access_token":access_token
+        #     # }
+        #     return Response(regist_response_json,status=status.HTTP_201_CREATED)
+        # else:
+        #     print('실패')
+        #     return Response(status=status.HTTP_400_BAD_REQUEST)
+        # # return Response({f"access_token":{access_token}},status=status.HTTP_200_OK)
 
 
 
