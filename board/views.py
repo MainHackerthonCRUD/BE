@@ -155,6 +155,7 @@ def kakako_callback(request):
         kakao_user=CustomUser(nickname=user_nickname)
         kakao_user.save()
         kakao_user=CustomUser.objects.get(nickname=user_nickname)
+        kakao_serializer=CustomUserSerializer(kakao_user)
         token=TokenObtainPairSerializer.get_token(kakao_user)
         kakao_access_token=str(token.access_token)
 
