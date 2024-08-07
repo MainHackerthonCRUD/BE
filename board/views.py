@@ -14,7 +14,7 @@ from .serializers import *
 import json
 
 
-
+from decouple import config
 from django.shortcuts import redirect
 
 
@@ -23,7 +23,7 @@ def kakao(request):
     # 
     kakao_api="https://kauth.kakao.com/oauth/authorize?"
     redirect_uri="https://obspital.shop/kakao/callback/"
-    client_id="6bf5f3d7db0da82bb551b5e113dcc846"
+    client_id=config('Client_ID')
     response_type="code"
 
     return redirect(f"{kakao_api}&client_id={client_id}&redirect_uri={redirect_uri}&response_type={response_type}")
@@ -52,15 +52,12 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
 
-'''
-https://kauth.kakao.com/oauth/authorize?client_id=6bf5f3d7db0da82bb551b5e113dcc846&redirect_uri=http://127.0.0.1:8000/kakao/callback/&response_type=code
-'''
 @api_view(['GET'])
 def kakako_callback(request):
 
     data={
         "grant_type"    :"authorization_code",
-        "client_id":"6bf5f3d7db0da82bb551b5e113dcc846",
+        "client_id":config('Client_ID'),
         "redirect_uri":"https://obspital.shop/kakao/callback/",
         "code":request.GET["code"]
     }
